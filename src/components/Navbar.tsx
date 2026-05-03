@@ -101,7 +101,7 @@ export default function Navbar() {
             </div>
 
             {/* Center Navigation - Desktop */}
-            <div className="hidden lg:flex flex-1 items-center justify-center space-x-4 xl:space-x-8 font-medium text-[12px] xl:text-[13px] tracking-wider px-4">
+            <div className="hidden lg:flex flex-1 items-center justify-center space-x-3 xl:space-x-8 font-medium text-[11px] xl:text-[13px] tracking-wider px-2 xl:px-4">
               {categories.map((cat) => (
                 <div 
                   key={cat.name} 
@@ -122,14 +122,14 @@ export default function Navbar() {
             </div>
 
             {/* Right Icons */}
-            <div className="flex items-center justify-end space-x-3 xl:space-x-5 flex-shrink-0">
+            <div className="flex items-center justify-end space-x-2 xl:space-x-5 flex-shrink-0">
               {/* Search Mock Bar (Desktop) */}
               <div 
-                className="hidden lg:flex items-center bg-gray-100 text-gray-500 rounded-md py-2 px-3 xl:px-4 cursor-text w-full max-w-[200px] xl:max-w-[260px] hover:bg-gray-200 transition-colors"
+                className="hidden lg:flex items-center bg-gray-100 text-gray-500 rounded-md py-2 px-2 xl:px-4 cursor-text w-full max-w-[140px] xl:max-w-[260px] hover:bg-gray-200 transition-colors"
                 onClick={() => setIsSearchOpen(true)}
               >
                 <Search size={16} strokeWidth={2} className="mr-2 flex-shrink-0" />
-                <span className="text-[13px] xl:text-sm font-normal truncate">Search for products...</span>
+                <span className="text-[11px] xl:text-sm font-normal truncate">Search...</span>
               </div>
 
               {/* Mobile Search Icon */}
@@ -137,21 +137,21 @@ export default function Navbar() {
                 <Search size={22} strokeWidth={1.5} />
               </button>
 
-              <button className="hidden lg:flex flex-col items-center p-2 relative hover:opacity-70 transition-opacity group">
+              <button className="hidden lg:flex flex-col items-center justify-center p-2 relative hover:opacity-70 transition-opacity group">
                 <User size={22} strokeWidth={1.5} />
-                <span className="text-[10px] uppercase font-bold mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Profile</span>
+                <span className="text-[10px] uppercase font-bold opacity-0 group-hover:opacity-100 transition-opacity absolute top-[100%] whitespace-nowrap pt-1">Profile</span>
               </button>
               
-              <button className="hidden lg:flex flex-col items-center p-2 relative hover:opacity-70 transition-opacity group">
+              <button className="hidden lg:flex flex-col items-center justify-center p-2 relative hover:opacity-70 transition-opacity group">
                 <Heart size={22} strokeWidth={1.5} />
                 {wishlist.length > 0 && (
                   <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-[#ff3f6c] text-white rounded-full" />
                 )}
-                <span className="text-[10px] uppercase font-bold mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Wishlist</span>
+                <span className="text-[10px] uppercase font-bold opacity-0 group-hover:opacity-100 transition-opacity absolute top-[100%] whitespace-nowrap pt-1">Wishlist</span>
               </button>
               
               <button 
-                className="flex lg:flex-col items-center p-2 relative hover:opacity-70 transition-opacity group"
+                className="flex lg:flex-col items-center justify-center p-2 relative hover:opacity-70 transition-opacity group"
                 onClick={() => setIsCartOpen(true)}
               >
                 <ShoppingBag size={22} strokeWidth={1.5} />
@@ -167,7 +167,7 @@ export default function Navbar() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-                <span className="hidden lg:block text-[10px] uppercase font-bold mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Bag</span>
+                <span className="hidden lg:block text-[10px] uppercase font-bold opacity-0 group-hover:opacity-100 transition-opacity absolute top-[100%] whitespace-nowrap pt-1">Bag</span>
               </button>
             </div>
           </div>
