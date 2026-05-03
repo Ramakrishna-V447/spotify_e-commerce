@@ -35,6 +35,7 @@ export default function Navbar() {
 	  // Let's ensure single click works by checking if it's the first click or we can just always navigate to home on first click.
       // But 10 clicks would trigger 10 home sets. That's fine.
       setView({ name: 'home' });
+      window.scrollTo(0, 0);
     }
   };
 
@@ -65,7 +66,6 @@ export default function Navbar() {
     { name: 'MEN', viewParam: 'Men' },
     { name: 'WOMEN', viewParam: 'Women' },
     { name: 'KIDS', viewParam: 'Kids' },
-    { name: 'HOME', viewParam: 'Home' },
     { name: 'BEAUTY', viewParam: 'Beauty' },
     { name: 'GENZ', viewParam: 'GenZ' },
     { name: 'STUDIO', viewParam: 'Studio', isNew: true }
@@ -107,7 +107,10 @@ export default function Navbar() {
                   key={cat.name} 
                   className="relative group py-8 cursor-pointer flex items-center"
                   onMouseEnter={() => setHoveredCategory(cat.name)}
-                  onClick={() => setView({ name: 'category', category: cat.viewParam as any })}
+                  onClick={() => {
+                    setView({ name: 'category', category: cat.viewParam as any });
+                    window.scrollTo(0, 0);
+                  }}
                 >
                   <span className={`relative z-10 transition-colors duration-300 ${hoveredCategory === cat.name ? 'text-gray-500' : ''}`}>
                     {cat.name}
@@ -142,7 +145,10 @@ export default function Navbar() {
                 <span className="text-[10px] uppercase font-bold opacity-0 group-hover:opacity-100 transition-opacity absolute top-[100%] whitespace-nowrap pt-1">Profile</span>
               </button>
               
-              <button className="hidden lg:flex flex-col items-center justify-center p-2 relative hover:opacity-70 transition-opacity group">
+              <button 
+                className="hidden lg:flex flex-col items-center justify-center p-2 relative hover:opacity-70 transition-opacity group"
+                onClick={() => { setView({ name: 'wishlist' }); window.scrollTo(0, 0); }}
+              >
                 <Heart size={22} strokeWidth={1.5} />
                 {wishlist.length > 0 && (
                   <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-[#ff3f6c] text-white rounded-full" />
@@ -329,6 +335,7 @@ export default function Navbar() {
                        e.preventDefault(); 
                        setIsMenuOpen(false); 
                        setView({ name: 'category', category: item.viewParam as any }); 
+                       window.scrollTo(0, 0);
                      }}
                   >
                      {item.name}
@@ -341,7 +348,7 @@ export default function Navbar() {
                 <div className="h-px bg-gray-200 my-4" />
                 
                 <a href="#" className="flex items-center text-gray-600 font-medium text-lg"><User className="mr-3" size={20} /> Profile</a>
-                <a href="#" className="flex items-center text-gray-600 font-medium text-lg"><Heart className="mr-3" size={20} /> Wishlist</a>
+                <a href="#" onClick={(e) => { e.preventDefault(); setView({ name: 'wishlist' }); setIsMenuOpen(false); window.scrollTo(0, 0); }} className="flex items-center text-gray-600 font-medium text-lg"><Heart className="mr-3" size={20} /> Wishlist</a>
               </div>
             </div>
           </motion.div>

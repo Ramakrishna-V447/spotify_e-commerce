@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Product, products as initialProducts } from '../data/products';
 
 type ViewState = {
-  name: 'home' | 'product' | 'checkout' | 'category' | 'admin-login' | 'admin-dashboard';
+  name: 'home' | 'product' | 'checkout' | 'category' | 'admin-login' | 'admin-dashboard' | 'wishlist';
   productId?: string;
   category?: 'Men' | 'Women' | 'Kids' | 'Beauty' | 'Home' | 'GenZ' | 'Studio';
   adminTab?: 'dashboard' | 'products' | 'orders' | 'users';
