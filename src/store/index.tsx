@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Product } from '../data/products';
+import { Product, products as initialProducts } from '../data/products';
 
 type ViewState = {
-  name: 'home' | 'product' | 'checkout';
+  name: 'home' | 'product' | 'checkout' | 'category' | 'admin-login' | 'admin-dashboard';
   productId?: string;
+  category?: 'Men' | 'Women' | 'Kids' | 'Beauty' | 'Home' | 'GenZ' | 'Studio';
+  adminTab?: 'dashboard' | 'products' | 'orders' | 'users';
 };
 
 interface CartItem {
@@ -22,6 +24,12 @@ interface AppContextType {
   setIsCartOpen: (isOpen: boolean) => void;
   wishlist: string[];
   toggleWishlist: (productId: string) => void;
+  isAdminAuthenticated: boolean;
+  setAdminAuthenticated: (auth: boolean) => void;
+  storeProducts: Product[];
+  addStoreProduct: (product: Product) => void;
+  updateStoreProduct: (id: string, product: Product) => void;
+  removeStoreProduct: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -31,6 +39,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [wishlist, setWishlist] = useState<string[]>([]);
+  const [isAdminAuthenticated, setAdminAuthenticated] = useState(false);
+  const [storeProducts, setStoreProducts] = useState<Product[]>(initialProducts);
 
   const addToCart = (product: Product, size?: string) => {
     setCart(prev => {
@@ -57,12 +67,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const addStoreProduct = (product: Product) => {
+    setStoreProducts(prev => [product, ...prev]);
+  };
+
+  const updateStoreProduct = (id: string, product: Product) => {
+    setStoreProducts(prev => prev.map(p => p.id === id ? product : p));
+  };
+
+  const removeStoreProduct = (id: string) => {
+    setStoreProducts(prev => prev.filter(p => p.id !== id));
+  };
+
   return (
     <AppContext.Provider value={{
       view, setView,
       cart, addToCart, removeFromCart,
       isCartOpen, setIsCartOpen,
-      wishlist, toggleWishlist
+      wishlist, toggleWishlist,
+      isAdminAuthenticated, setAdminAuthenticated,
+      storeProducts, addStoreProduct, updateStoreProduct, removeStoreProduct
     }}>
       {children}
     </AppContext.Provider>

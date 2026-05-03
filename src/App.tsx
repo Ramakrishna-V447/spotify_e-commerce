@@ -10,12 +10,15 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProductPage from './pages/ProductPage';
 import Checkout from './pages/Checkout';
+import CategoryPage from './pages/CategoryPage';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import Cursor from './components/Cursor';
 
 function AppContent() {
-  const { view } = useAppStore();
+  const { view, setView } = useAppStore();
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   useEffect(() => {
@@ -54,19 +57,22 @@ function AppContent() {
         )}
       </AnimatePresence>
 
-      {view.name !== 'checkout' && <Navbar />}
+      {view.name !== 'checkout' && view.name !== 'admin-login' && view.name !== 'admin-dashboard' && <Navbar />}
 
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           {view.name === 'home' && <Home key="home" />}
           {view.name === 'product' && <ProductPage key="product" />}
           {view.name === 'checkout' && <Checkout key="checkout" />}
+          {view.name === 'category' && <CategoryPage key="category" />}
+          {view.name === 'admin-login' && <AdminLogin key="admin-login" />}
+          {view.name === 'admin-dashboard' && <AdminDashboard key="admin-dashboard" />}
         </AnimatePresence>
       </main>
 
-      <CartDrawer />
+      {view.name !== 'admin-login' && view.name !== 'admin-dashboard' && <CartDrawer />}
       
-      {view.name !== 'checkout' && (
+      {view.name !== 'checkout' && view.name !== 'admin-login' && view.name !== 'admin-dashboard' && (
         <a 
           href="https://wa.me/1234567890" 
           target="_blank" 
@@ -82,7 +88,7 @@ function AppContent() {
       )}
 
       {/* Mobile Bottom Navigation */}
-      {view.name !== 'checkout' && (
+      {view.name !== 'checkout' && view.name !== 'admin-login' && view.name !== 'admin-dashboard' && (
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-md border-t border-gray-200 flex justify-around items-center h-16 pb-safe">
           <button onClick={() => setView({ name: 'home' })} className="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-black transition-colors">
             <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
@@ -99,8 +105,8 @@ function AppContent() {
         </div>
       )}
 
-      {view.name !== 'checkout' && <div className="hidden md:block"><Footer /></div>}
-      {view.name !== 'checkout' && <div className="block md:hidden pb-16"><Footer /></div>}
+      {view.name !== 'checkout' && view.name !== 'admin-login' && view.name !== 'admin-dashboard' && <div className="hidden md:block"><Footer /></div>}
+      {view.name !== 'checkout' && view.name !== 'admin-login' && view.name !== 'admin-dashboard' && <div className="block md:hidden pb-16"><Footer /></div>}
     </div>
   );
 }

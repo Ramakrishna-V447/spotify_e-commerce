@@ -16,7 +16,7 @@ export interface Product {
   reviewCount?: number;
 }
 
-export const products: Product[] = [
+const manualProducts: Product[] = [
   // Women
   {
     id: "w1",
@@ -74,7 +74,6 @@ export const products: Product[] = [
     rating: 5.0,
     reviewCount: 89
   },
-  
   {
     id: "w4",
     name: "Cashmere Wrap Cardigan",
@@ -166,7 +165,7 @@ export const products: Product[] = [
     rating: 4.9,
     reviewCount: 45
   },
-
+  
   // Kids
   {
     id: "k1",
@@ -236,4 +235,68 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 27
   }
+];
+
+const generateBulkProducts = (department: 'Men' | 'Women' | 'Kids', count: number): Product[] => {
+  const images = {
+    Men: [
+      "https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&q=80&w=400", 
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=400", 
+      "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&q=80&w=400",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=400",
+      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=400"
+    ],
+    Women: [
+      "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&q=80&w=400", 
+      "https://images.unsplash.com/photo-1515347619152-16aeeeb342bc?auto=format&fit=crop&q=80&w=400", 
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=400",
+      "https://images.unsplash.com/photo-1550639525-c97d455acf70?auto=format&fit=crop&q=80&w=400",
+      "https://images.unsplash.com/photo-1485230405346-71acb9518d9c?auto=format&fit=crop&q=80&w=400"
+    ],
+    Kids: [
+      "https://images.unsplash.com/photo-1662973415137-ed8a9ea3eec7?auto=format&fit=crop&q=80&w=400", 
+      "https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?auto=format&fit=crop&q=80&w=400", 
+      "https://images.unsplash.com/photo-1604467715878-83e57e841243?auto=format&fit=crop&q=80&w=400",
+      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=400",
+      "https://images.unsplash.com/photo-1596870230751-ebdfce98ec42?auto=format&fit=crop&q=80&w=400"
+    ]
+  };
+  const categories = {
+    Men: ["Shirts", "Jeans", "Jackets", "T-Shirts", "Ethnic Wear", "Trousers", "Blazers"],
+    Women: ["Dresses", "Kurtis", "Tops", "Sarees", "Jeans", "Skirts", "Outerwear"],
+    Kids: ["Casual Wear", "School Wear", "Festive Wear", "Sleepwear", "Outerwear"]
+  };
+  const designers = ["VÈLURE", "LUCIEN", "AURELIA", "NOIR", "ATELIER", "LUMI", "PETIT NOIR"];
+  
+  return Array.from({ length: count }).map((_, i) => {
+    const cat = categories[department][i % categories[department].length];
+    const designer = designers[i % designers.length];
+    const image = images[department][i % images[department].length];
+    const hoverImage = images[department][(i + 1) % images[department].length];
+    const price = Math.floor(Math.random() * 800) + 150;
+    
+    return {
+      id: `${department.toLowerCase()[0]}_bulk_${i}`,
+      name: `${designer} ${cat}`,
+      designer,
+      price,
+      offer: Math.random() > 0.8 ? '15% Off' : undefined,
+      image,
+      hoverImage,
+      category: cat,
+      department,
+      description: `Premium quality ${cat.toLowerCase()} from ${designer}. Designed for everyday elegance and crafted carefully from the highest quality resources.`,
+      images: [image, hoverImage],
+      rating: +(Math.random() + 4).toFixed(1),
+      reviewCount: Math.floor(Math.random() * 500) + 10,
+      trending: Math.random() > 0.8
+    };
+  });
+};
+
+export const products = [ 
+  ...manualProducts, 
+  ...generateBulkProducts('Men', 100), 
+  ...generateBulkProducts('Women', 100), 
+  ...generateBulkProducts('Kids', 100) 
 ];

@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ArrowRight, Heart, Share2 } from 'lucide-react';
 import { useAppStore } from '../store';
-import { products } from '../data/products';
 
 export default function ProductPage() {
-  const { view, setView, addToCart, wishlist, toggleWishlist } = useAppStore();
+  const { view, setView, addToCart, wishlist, toggleWishlist, storeProducts } = useAppStore();
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [activeImage, setActiveImage] = useState(0);
 
-  const product = products.find(p => p.id === view.productId) || products[0];
+  const product = storeProducts.find(p => p.id === view.productId) || storeProducts[0];
   const isWishlisted = wishlist.includes(product.id);
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL'];
@@ -237,7 +236,7 @@ export default function ProductPage() {
             </div>
           </div>
           <div className="flex overflow-x-auto gap-8 pb-10 hide-scrollbar snap-x snap-mandatory">
-            {products.filter(p => p.id !== product.id).slice(0, 4).map((recProduct) => (
+            {storeProducts.filter(p => p.id !== product.id).slice(0, 4).map((recProduct) => (
               <div key={recProduct.id} className="min-w-[280px] md:min-w-[340px] snap-center">
                 {/* Simplified recommendation card to avoid circular dependency / complex imports if needed, but we can reuse ProductCard. Oh wait, ProductCard relies on setView and product context, wait let's just render the same ProductCard. */}
                 <div 

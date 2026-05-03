@@ -2,14 +2,15 @@ import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { Heart } from 'lucide-react';
 import { Product } from '../data/products';
 import { useAppStore } from '../store';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 interface Props {
   product: Product;
+  key?: React.Key;
 }
 
 export default function ProductCard({ product }: Props) {
-  const { toggleWishlist, wishlist, setView } = useAppStore();
+  const { toggleWishlist, wishlist, setView, addToCart } = useAppStore();
   const isWishlisted = wishlist.includes(product.id);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -108,15 +109,11 @@ export default function ProductCard({ product }: Props) {
           <button 
             onClick={(e) => { 
                 e.stopPropagation(); 
-                // Quick View mock action -> opens product page anyway or add to cart directly? Let's add to cart directly.
-                // But ProductCard doesn't have addToCart. We can get it from useAppStore.
-                const store = useAppStore.getState?.() // Can't do this directly easily if store doesn't expose it, I'll stick to setView. Wait, we are in a component, we can destructure it.
-                // Let's get addToCart from the hook above. Wait, I didn't destructure addToCart.
-                setView({ name: 'product', productId: product.id }); 
+                addToCart(product);
             }}
             className="bg-white/90 backdrop-blur-md text-black px-6 py-3 uppercase tracking-widest text-[10px] w-full max-w-[200px] hover:bg-white transition-colors shadow-lg font-medium"
           >
-            Quick View
+            Quick Add
           </button>
         </div>
       </motion.div>

@@ -1,14 +1,13 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
-import { products } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import Marquee from '../components/Marquee';
-import { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useAppStore } from '../store';
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
-  const { setView } = useAppStore();
+  const { setView, storeProducts } = useAppStore();
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
@@ -47,9 +46,9 @@ export default function Home() {
     show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
   };
 
-  const womenProducts = products.filter(p => p.department === 'Women');
-  const menProducts = products.filter(p => p.department === 'Men');
-  const kidsProducts = products.filter(p => p.department === 'Kids');
+  const womenProducts = storeProducts.filter((p: any) => p.department === 'Women');
+  const menProducts = storeProducts.filter((p: any) => p.department === 'Men');
+  const kidsProducts = storeProducts.filter((p: any) => p.department === 'Kids');
 
   return (
     <motion.div 
@@ -252,7 +251,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="font-serif text-2xl mb-8">Recently Viewed</h3>
           <div className="flex gap-4 overflow-x-auto hide-scrollbar snap-x pb-4">
-            {products.slice(0, 5).reverse().map((product) => (
+            {storeProducts.slice(0, 5).reverse().map((product: any) => (
               <div 
                 key={product.id} 
                 className="min-w-[160px] snap-start group cursor-pointer"
